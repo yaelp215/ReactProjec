@@ -1,12 +1,18 @@
 import React from "react";
-// import MyForm from "./components/Login/Login";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ListCar from "./components/ListCars/listCars"
+import CarDetails from "./components/CarDetails/CarDetails"
+import MyForm from "./components/Login/Login";
 
 export default function App() {
   return (
-    <div>
-      <h1>טופס לדוגמה</h1>
-      <ListCar />
-    </div>
+    <BrowserRouter> 
+    <Routes>
+      <Route path="/" element= {<ListCar />}/>
+      <Route path="/car-details/:id" element= {<CarDetails />}/>
+      <Route path="/login" element={<MyForm />} />
+    </Routes>
+    </BrowserRouter>
+    
   );
 }

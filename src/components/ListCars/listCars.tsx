@@ -22,7 +22,9 @@ const ListCar = ()=>{
         <div className='car-list-contauner'>
             <h2>אני קומפוננטת הרשימה!</h2>
             {cars.map((singleCar) => (
-                <CarCard car={singleCar}
+                <CarCard 
+                car={singleCar}
+                key={singleCar.id}
                 ></CarCard>
             ))}
         </div>

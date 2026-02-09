@@ -1,0 +1,14 @@
+/* עיצוב להודעת השגיאה */
+.error-text {
+    color: red;
+    font-size: 0.8rem;
+    display: block; /* זה מה שיגרום לירידת השורה */
+    margin-top: 3px; /* מעט רווח מהשדה שמעליו */
+}
+
+/* בונוס: עיצוב כללי לדיב שעוטף את השדה */
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,38 +1,326 @@
 {
   "users": [
-    { "id": "1", "firstName": "Yael", "lastName": "Cohen", "phone": "050-1234567", "email": "yael.c@example.com", "password": "pass1234!" },
-    { "id": "2", "firstName": "Ruth", "lastName": "Levi", "phone": "052-7654321", "email": "ruth.l@example.com", "password": "ruthPassword" },
-    { "id": "3", "firstName": "Abraham", "lastName": "Avrahami", "phone": "054-1112233", "email": "abe@example.com", "password": "securePass3" },
-    { "id": "4", "firstName": "Sarah", "lastName": "Imeinu", "phone": "053-4445566", "email": "sarah@example.com", "password": "password44" },
-    { "id": "5", "firstName": "David", "lastName": "Melech", "phone": "058-9988776", "email": "david@example.com", "password": "kingDavid5" },
-    { "id": "6", "firstName": "Moshe", "lastName": "Rabbenu", "phone": "050-5556677", "email": "moshe@example.com", "password": "moshePass6" },
-    { "id": "7", "firstName": "Miriam", "lastName": "HaNivia", "phone": "052-8889900", "email": "miriam@example.com", "password": "miriamPass7" }
+    {
+      "id": "1",
+      "firstName": "Yael",
+      "lastName": "Cohen",
+      "phone": "050-1234567",
+      "email": "yael.c@example.com",
+      "password": "pass1234!"
+    },
+    {
+      "id": "2",
+      "firstName": "Ruth",
+      "lastName": "Levi",
+      "phone": "052-7654321",
+      "email": "ruth.l@example.com",
+      "password": "ruthPassword"
+    },
+    {
+      "id": "3",
+      "firstName": "Abraham",
+      "lastName": "Avrahami",
+      "phone": "054-1112233",
+      "email": "abe@example.com",
+      "password": "securePass3"
+    },
+    {
+      "id": "4",
+      "firstName": "Sarah",
+      "lastName": "Imeinu",
+      "phone": "053-4445566",
+      "email": "sarah@example.com",
+      "password": "password44"
+    },
+    {
+      "id": "5",
+      "firstName": "David",
+      "lastName": "Melech",
+      "phone": "058-9988776",
+      "email": "david@example.com",
+      "password": "kingDavid5"
+    },
+    {
+      "id": "6",
+      "firstName": "Moshe",
+      "lastName": "Rabbenu",
+      "phone": "050-5556677",
+      "email": "moshe@example.com",
+      "password": "moshePass6"
+    },
+    {
+      "id": "7",
+      "firstName": "Miriam",
+      "lastName": "HaNivia",
+      "phone": "052-8889900",
+      "email": "miriam@example.com",
+      "password": "miriamPass7"
+    },
+    {
+      "id": "1770656823092",
+      "firstName": "יעל",
+      "lastName": "פרלמן",
+      "year": 2006,
+      "password": "Abc123!@",
+      "phone": "0583287969",
+      "email": "y0583287969@gmail.com"
+    }
   ],
   "cars": [
-    { "id": "c1", "company": "Tesla", "year": 2023, "color": "לבן", "placeNumber": 5, "gearType": "automatic", "priceToDay": 350, "imageUrl": "https://example.com/tesla3.jpg", "fuelType": "electric" },
-    { "id": "c2", "company": "Toyota", "year": 2022, "color": "כסוף", "placeNumber": 5, "gearType": "automatic", "priceToDay": 220, "imageUrl": "https://example.com/corolla.jpg", "fuelType": "hybrid", "fuelConsumption": 4.5 },
-    { "id": "c3", "company": "Hyundai", "year": 2021, "color": "כחול", "placeNumber": 5, "gearType": "automatic", "priceToDay": 180, "imageUrl": "https://example.com/i10.jpg", "fuelType": "fuel", "fuelConsumption": 6.2 },
-    { "id": "c4", "company": "BYD", "year": 2024, "color": "אפור", "placeNumber": 5, "gearType": "automatic", "priceToDay": 300, "imageUrl": "https://example.com/atto3.jpg", "fuelType": "electric" },
-    { "id": "c5", "company": "Skoda", "year": 2022, "color": "שחור", "placeNumber": 7, "gearType": "automatic", "priceToDay": 400, "imageUrl": "https://example.com/kodiaq.jpg", "fuelType": "fuel", "fuelConsumption": 7.8 },
-    { "id": "c6", "company": "Kia", "year": 2023, "color": "אדום", "placeNumber": 5, "gearType": "automatic", "priceToDay": 250, "imageUrl": "https://example.com/niro.jpg", "fuelType": "hybrid", "fuelConsumption": 4.8 },
-    { "id": "c7", "company": "Mazda", "year": 2020, "color": "לבן פנינה", "placeNumber": 5, "gearType": "automatic", "priceToDay": 210, "imageUrl": "https://example.com/cx5.jpg", "fuelType": "fuel", "fuelConsumption": 8.1 },
-    { "id": "c8", "company": "Volkswagen", "year": 2023, "color": "תכלת", "placeNumber": 5, "gearType": "automatic", "priceToDay": 320, "imageUrl": "https://example.com/id4.jpg", "fuelType": "electric" },
-    { "id": "c9", "company": "Suzuki", "year": 2021, "color": "צהוב", "placeNumber": 4, "gearType": "manual", "priceToDay": 150, "imageUrl": "https://example.com/jimny.jpg", "fuelType": "fuel", "fuelConsumption": 7.2 },
-    { "id": "c10", "company": "Mercedes", "year": 2024, "color": "שחור", "placeNumber": 5, "gearType": "automatic", "priceToDay": 650, "imageUrl": "https://example.com/eqs.jpg", "fuelType": "electric" },
-    { "id": "c11", "company": "Honda", "year": 2022, "color": "אפור מטאלי", "placeNumber": 5, "gearType": "automatic", "priceToDay": 240, "imageUrl": "https://example.com/civic.jpg", "fuelType": "hybrid", "fuelConsumption": 5.0 },
-    { "id": "c12", "company": "Mitsubishi", "year": 2021, "color": "לבן", "placeNumber": 7, "gearType": "automatic", "priceToDay": 280, "imageUrl": "https://example.com/outlander.jpg", "fuelType": "fuel", "fuelConsumption": 8.5 },
-    { "id": "c13", "company": "Volvo", "year": 2023, "color": "כסף", "placeNumber": 5, "gearType": "automatic", "priceToDay": 450, "imageUrl": "https://example.com/xc40.jpg", "fuelType": "electric" },
-    { "id": "c14", "company": "Dacia", "year": 2022, "color": "כתום", "placeNumber": 7, "gearType": "manual", "priceToDay": 190, "imageUrl": "https://example.com/jogger.jpg", "fuelType": "fuel", "fuelConsumption": 6.0 },
-    { "id": "c15", "company": "Peugeot", "year": 2023, "color": "ירוק בקבוק", "placeNumber": 5, "gearType": "automatic", "priceToDay": 260, "imageUrl": "https://example.com/2008.jpg", "fuelType": "fuel", "fuelConsumption": 5.8 },
-    { "id": "c16", "company": "Audi", "year": 2024, "color": "אפור", "placeNumber": 5, "gearType": "automatic", "priceToDay": 550, "imageUrl": "https://example.com/etron.jpg", "fuelType": "electric" },
-    { "id": "c17", "company": "Nissan", "year": 2022, "color": "בורדו", "placeNumber": 5, "gearType": "automatic", "priceToDay": 230, "imageUrl": "https://example.com/qashqai.jpg", "fuelType": "hybrid", "fuelConsumption": 5.2 },
-    { "id": "c18", "company": "Subaru", "year": 2021, "color": "כחול כהה", "placeNumber": 5, "gearType": "automatic", "priceToDay": 220, "imageUrl": "https://example.com/forester.jpg", "fuelType": "fuel", "fuelConsumption": 8.3 },
-    { "id": "c19", "company": "MG", "year": 2023, "color": "לבן", "placeNumber": 5, "gearType": "automatic", "priceToDay": 240, "imageUrl": "https://example.com/mg4.jpg", "fuelType": "electric" },
-    { "id": "c20", "company": "Ford", "year": 2022, "color": "שחור", "placeNumber": 5, "gearType": "automatic", "priceToDay": 380, "imageUrl": "https://example.com/mach-e.jpg", "fuelType": "electric" }
+    {
+      "id": "c1",
+      "company": "Tesla",
+      "year": 2023,
+      "color": "לבן",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 350,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c2",
+      "company": "Toyota",
+      "year": 2022,
+      "color": "כסוף",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 220,
+      "imageUrl": "/Image/Car2.jpg",
+      "fuelType": "hybrid",
+      "fuelConsumption": 4.5
+    },
+    {
+      "id": "c3",
+      "company": "Hyundai",
+      "year": 2021,
+      "color": "כחול",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 180,
+      "imageUrl": "/Image/Car3.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 6.2
+    },
+    {
+      "id": "c4",
+      "company": "BYD",
+      "year": 2024,
+      "color": "אפור",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 300,
+      "imageUrl": "/Image/Car4.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c5",
+      "company": "Skoda",
+      "year": 2022,
+      "color": "שחור",
+      "placeNumber": 7,
+      "gearType": "automatic",
+      "priceToDay": 400,
+      "imageUrl": "/Image/Car5.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 7.8
+    },
+    {
+      "id": "c6",
+      "company": "Kia",
+      "year": 2023,
+      "color": "אדום",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 250,
+      "imageUrl": "/Image/Car6.jpg",
+      "fuelType": "hybrid",
+      "fuelConsumption": 4.8
+    },
+    {
+      "id": "c7",
+      "company": "Mazda",
+      "year": 2020,
+      "color": "לבן פנינה",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 210,
+      "imageUrl": "/Image/Car7.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 8.1
+    },
+    {
+      "id": "c8",
+      "company": "Volkswagen",
+      "year": 2023,
+      "color": "תכלת",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 320,
+      "imageUrl": "/Image/Car8.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c9",
+      "company": "Suzuki",
+      "year": 2021,
+      "color": "צהוב",
+      "placeNumber": 4,
+      "gearType": "manual",
+      "priceToDay": 150,
+      "imageUrl": "/Image/Car9.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 7.2
+    },
+    {
+      "id": "c10",
+      "company": "Mercedes",
+      "year": 2024,
+      "color": "שחור",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 650,
+      "imageUrl": "/Image/Car10.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c11",
+      "company": "Honda",
+      "year": 2022,
+      "color": "אפור מטאלי",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 240,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "hybrid",
+      "fuelConsumption": 5
+    },
+    {
+      "id": "c12",
+      "company": "Mitsubishi",
+      "year": 2021,
+      "color": "לבן",
+      "placeNumber": 7,
+      "gearType": "automatic",
+      "priceToDay": 280,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 8.5
+    },
+    {
+      "id": "c13",
+      "company": "Volvo",
+      "year": 2023,
+      "color": "כסף",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 450,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c14",
+      "company": "Dacia",
+      "year": 2022,
+      "color": "כתום",
+      "placeNumber": 7,
+      "gearType": "manual",
+      "priceToDay": 190,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 6
+    },
+    {
+      "id": "c15",
+      "company": "Peugeot",
+      "year": 2023,
+      "color": "ירוק בקבוק",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 260,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 5.8
+    },
+    {
+      "id": "c16",
+      "company": "Audi",
+      "year": 2024,
+      "color": "אפור",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 550,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c17",
+      "company": "Nissan",
+      "year": 2022,
+      "color": "בורדו",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 230,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "hybrid",
+      "fuelConsumption": 5.2
+    },
+    {
+      "id": "c18",
+      "company": "Subaru",
+      "year": 2021,
+      "color": "כחול כהה",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 220,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "fuel",
+      "fuelConsumption": 8.3
+    },
+    {
+      "id": "c19",
+      "company": "MG",
+      "year": 2023,
+      "color": "לבן",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 240,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "electric"
+    },
+    {
+      "id": "c20",
+      "company": "Ford",
+      "year": 2022,
+      "color": "שחור",
+      "placeNumber": 5,
+      "gearType": "automatic",
+      "priceToDay": 380,
+      "imageUrl": "/Image/Car1.jpg",
+      "fuelType": "electric"
+    }
   ],
   "Opinion": [
-    { "id": "r1", "idProduct": "c1", "idUser": "1", "comment": "רכב מדהים ושקט מאוד", "rating": 5 },
-    { "id": "r2", "idProduct": "c2", "idUser": "3", "comment": "חסכוני מאוד בדלק ונוח לנסיעות ארוכות", "rating": 4 },
-    { "id": "r3", "idProduct": "c5", "idUser": "5", "comment": "מעולה למשפחה גדולה", "rating": 5 }
+    {
+      "id": "r1",
+      "idProduct": "c1",
+      "idUser": "1",
+      "comment": "רכב מדהים ושקט מאוד",
+      "rating": 5
+    },
+    {
+      "id": "r2",
+      "idProduct": "c2",
+      "idUser": "3",
+      "comment": "חסכוני מאוד בדלק ונוח לנסיעות ארוכות",
+      "rating": 4
+    },
+    {
+      "id": "r3",
+      "idProduct": "c5",
+      "idUser": "5",
+      "comment": "מעולה למשפחה גדולה",
+      "rating": 5
+    }
   ]
 }
