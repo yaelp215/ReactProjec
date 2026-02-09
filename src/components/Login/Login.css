@@ -1,14 +1,99 @@
-/* עיצוב להודעת השגיאה */
-.error-text {
-    color: red;
-    font-size: 0.8rem;
-    display: block; /* זה מה שיגרום לירידת השורה */
-    margin-top: 3px; /* מעט רווח מהשדה שמעליו */
+/* מרכז את הטופס במסך */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7f6; /* רקע בהיר ונעים */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* בונוס: עיצוב כללי לדיב שעוטף את השדה */
-.input-group {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+/* מיכל הטופס */
+.form-container {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    direction: rtl; /* תמיכה בעברית */
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* עיצוב השדות */
+.form-container div {
+    margin-bottom: 1.2rem;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box; /* חשוב כדי שהפדינג לא יהרוס את הרוחב */
+    transition: border-color 0.3s ease;
+}
+
+.form-container input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* עיצוב שגיאות */
+.error-text {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* כפתור ראשי */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* כפתור הרשמה/מעבר */
+.register-btn {
+    background: none;
+    border: 1px solid #007bff;
+    color: #007bff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #f0f7ff;
+}
+
+.form-container p {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9rem;
 }

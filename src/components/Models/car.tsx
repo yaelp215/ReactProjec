@@ -9,7 +9,8 @@ interface BaseCar {
     placeNumber: number;
     gearType: GearType; 
     priceToDay: number;
-    imageUrl: string
+    imageUrl: string;
+    availability: boolean[];
 }
 
 interface ElectricCar extends BaseCar {

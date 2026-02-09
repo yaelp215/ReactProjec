@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import type {Car} from "../Models/car";
 import { Link } from 'react-router-dom';
 

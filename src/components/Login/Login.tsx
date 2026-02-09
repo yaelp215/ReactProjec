@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import './Login.css'; 
-import type {user} from "../Models/user"
+import './Login.css';
+import type { user } from "../Models/user"
+import { useNavigate } from "react-router-dom";
 
-// פונקציית אימות טלפון מעודכנת (תומכת ב-9 או 10 ספרות)
 function isValidIsraeliPhone(phone?: string) {
     if (!phone) return false;
     const cleaned = phone.replace(/[\s-]/g, "");
@@ -12,6 +12,7 @@ function isValidIsraeliPhone(phone?: string) {
 };
 
 export default function MyForm() {
+    const navigate = useNavigate();
     const [users, setUsers] = useState<user[]>([]);
 
     useEffect(() => {
@@ -58,42 +59,42 @@ export default function MyForm() {
                 email: "",
             }}
             validationSchema={validationSchema}
-onSubmit={async (values, { resetForm }) => {                const newUser = {...values, id: Date.now().toString()} as user;
-try {
-        // 2. שליחת המשתמש החדש לשרת (ל-db.json)
-        const response = await fetch("http://localhost:3000/users", {
-            method: "POST", // מציין שאנחנו מוסיפים נתונים חדשים
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newUser), // הופך את האובייקט לטקסט שהשרת מבין
-        });
+            onSubmit={async (values, { resetForm }) => {
+                const newUser = { ...values, id: Date.now().toString() } as user;
+                try {
+                    const response = await fetch("http://localhost:3000/users", {
+                        method: "POST", 
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(newUser), 
+                    });
 
-        if (response.ok) {
-            // 3. רק אם השמירה בשרת הצליחה, נעדכן את ה-State המקומי כדי לראות אותו במסך
-            setUsers((prevUsers) => {
-                const updatedList = [...prevUsers, newUser];
-                console.log("רשימה מעודכנת לאחר שמירה ב-DB:", updatedList);
-                return updatedList;
-            });
+                    if (response.ok) {
+                        setUsers((prevUsers) => {
+                            const updatedList = [...prevUsers, newUser];
+                            console.log("רשימה מעודכנת לאחר שמירה ב-DB:", updatedList);
+                            return updatedList;
+                        });
 
-            resetForm();
-            alert("המשתמש נשמר ב-DB בהצלחה!");
-        } else {
-            alert("הייתה בעיה בשמירת המשתמש בשרת.");
-        }
-    } catch (err) {
-        console.error("שגיאה בתקשורת עם השרת:", err);
-        alert("לא ניתן לגשת לשרת. וודאי ש-json-server רץ.");
-    }
-}}
+                        resetForm();
+                        alert("המשתמש נשמר ב-DB בהצלחה!");
+                        navigate("/Connection");
+                    } else {
+                        alert("הייתה בעיה בשמירת המשתמש בשרת.");
+                    }
+                } catch (err) {
+                    console.error("שגיאה בתקשורת עם השרת:", err);
+                    alert("לא ניתן לגשת לשרת. וודאי ש-json-server רץ.");
+                }
+            }}
         >
             <Form className="form-container">
                 <div>
                     <Field name="firstName" placeholder="שם פרטי" />
                     <ErrorMessage name="firstName" component="span" className="error-text" />
                 </div>
-                
+
                 <div>
                     <Field name="lastName" placeholder="שם משפחה" />
                     <ErrorMessage name="lastName" component="span" className="error-text" />
@@ -119,10 +120,10 @@ try {
                     <ErrorMessage name="email" component="span" className="error-text" />
                 </div>
 
-                <button type="submit">שלח</button>
+                <button type="submit" >שלח</button>
             </Form>
 
         </Formik>
-        
+
     );
 };
