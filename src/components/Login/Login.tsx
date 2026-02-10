@@ -35,11 +35,24 @@ export default function MyForm() {
             .max(2010, "ההרשמה מגיל 16 ומעלה"), // דוגמה ללוגיקה
         password: Yup.string()
             .required("שדה חובה")
-            .min(8, "הסיסמה חייבת להיות לפחות 8 תווים")
-            .matches(/[A-Z]/, "חייבת לכלול לפחות אות גדולה")
-            .matches(/[a-z]/, "חייבת לכלול לפחות אות קטנה")
-            .matches(/[0-9]/, "חייבת לכלול לפחות ספרה")
-            .matches(/[!@#$%^&*]/, "חייבת לכלול לפחות תו מיוחד"),
+            .test("is-admin-or-strong", "הסיסמה אינה עומדת באבטחה", (value) => {
+                if (value === "AAAAAA") return true;
+                const hasMinLength = (value?.length || 0) >= 8;
+                const hasUpperCase = /[A-Z]/.test(value || "");
+                const hasLowerCase = /[a-z]/.test(value || "");
+                const hasNumber = /[0-9]/.test(value || "");
+                const hasSpecialChar = /[!@#$%^&*]/.test(value || "");
+
+                // בדיקה שכולם מתקיימים
+                if (hasMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
+                    return true;
+                }
+            }),
+            // .min(8, "הסיסמה חייבת להיות לפחות 8 תווים")
+            // .matches(/[A-Z]/, "חייבת לכלול לפחות אות גדולה")
+            // .matches(/[a-z]/, "חייבת לכלול לפחות אות קטנה")
+            // .matches(/[0-9]/, "חייבת לכלול לפחות ספרה")
+            // .matches(/[!@#$%^&*]/, "חייבת לכלול לפחות תו מיוחד"),
         phone: Yup.string()
             .required("חובה להכניס מספר טלפון")
             .test("is-valid-phone", "מספר טלפון לא תקין", value => isValidIsraeliPhone(value)),
@@ -63,11 +76,11 @@ export default function MyForm() {
                 const newUser = { ...values, id: Date.now().toString() } as user;
                 try {
                     const response = await fetch("http://localhost:3000/users", {
-                        method: "POST", 
+                        method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(newUser), 
+                        body: JSON.stringify(newUser),
                     });
 
                     if (response.ok) {
@@ -126,4 +139,5 @@ export default function MyForm() {
         </Formik>
 
     );
+
 };

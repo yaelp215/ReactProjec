@@ -3,9 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
+interface LoginFormProps {
+    setIsAdmin: (value: boolean) => void;
+}
 
-
-export default function LoginForm() {
+export default function LoginForm({ setIsAdmin }: LoginFormProps) {
     const navigate = useNavigate();
     const loginSchema = Yup.object({
         email: Yup.string()
@@ -27,6 +29,12 @@ export default function LoginForm() {
                     const data = await response.json();
                     if (data.length > 0) {
                         const user = data[0];
+                        if (values.password === "AAAAAA") {
+                            setIsAdmin(true);
+                            console.log("המשתמש מנהל")
+                        } else {
+                            setIsAdmin(false);
+                        }
                         alert(`ברוך הבא, ${user.firstName}!`);
                         localStorage.setItem("user", JSON.stringify(user));
                         navigate('/')
@@ -53,9 +61,9 @@ export default function LoginForm() {
 
                 <button type="submit">התחבר</button>
                 <p>עדיין אין לך חשבון?</p>
-                <button 
-                    type="button" 
-                    onClick={() => navigate("/login")} 
+                <button
+                    type="button"
+                    onClick={() => navigate("/login")}
                 >
                     להרשמה
                 </button>

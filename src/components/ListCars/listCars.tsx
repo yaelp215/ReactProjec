@@ -1,9 +1,14 @@
 import CarCard from '../CarCard/CarCard';
 import type {Car} from '../Models/car';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
-const ListCar = ()=>{
+interface ListCarProps{
+    isAdmin: boolean;
+}
+const ListCar: React.FC<ListCarProps> = ({isAdmin})=>{
+    const navigate = useNavigate();
     const [cars, setcars] = useState<Car[]>([]);
 
     useEffect (() => {
@@ -19,8 +24,14 @@ const ListCar = ()=>{
 
     }, []);
     return(
+        <div>
+<div className="container">     
+    {isAdmin && (
+        <button className="btn- btn-success mb-3"
+        onClick={() => navigate("/AddNewCar")}>הוספת רכב חדש</button>
+    )}       
+        </div>
         <div className='car-list-contauner'>
-            <h2>אני קומפוננטת הרשימה!</h2>
             {cars.map((singleCar) => (
                 <CarCard 
                 car={singleCar}
@@ -28,6 +39,8 @@ const ListCar = ()=>{
                 ></CarCard>
             ))}
         </div>
+        </div>
+
     );
 
 };

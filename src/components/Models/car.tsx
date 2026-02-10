@@ -13,11 +13,11 @@ interface BaseCar {
     availability: boolean[];
 }
 
-interface ElectricCar extends BaseCar {
+export interface ElectricCar extends BaseCar {
     fuelType: "electric";
 }
 
-interface CombustionCar extends BaseCar {
+export interface CombustionCar extends BaseCar {
     fuelType: "hybrid" | "fuel";
     fuelConsumption: number; 
 }
