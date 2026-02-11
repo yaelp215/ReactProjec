@@ -1,11 +1,13 @@
+
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import type { Car } from '../Models/car';
 import './CarDetails.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-
-
+import OpinionSection from '../Opinion/Opinion';
+import CarAvailabilityCalendar from '../CarAvailabilityCalendar/CarAvailabilityCalendar';
+import AddOpinion from '../Addopinion/Addopinion'; // ייבוא הקומפוננטה החדשה
 
 interface CarDetailsProps {
     isAdmin: boolean;
@@ -14,213 +16,123 @@ interface CarDetailsProps {
 const CarDetails: React.FC<CarDetailsProps> = ({ isAdmin }) => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [car, setcar] = useState<Car>();
-    const [startDate, setStartDate] = useState<number | null>(null);
+    
+    const [car, setcar] = useState<Car | null>(null);
+    const [refreshKey, setRefreshKey] = useState(0); 
+    const [showAddForm, setShowAddForm] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:3000/cars/${id}`)
             .then(res => res.json())
             .then(data => setcar(data))
             .catch(err => console.error("Error fetching car:", err));
-    }, [id]);
+    }, [id, refreshKey]);
 
-    const handleDayClick = (index: number): void => {
-        if (!car) return;
+    const confirmBooking = async (selectedRange: number[]) => {
+        if (!car || selectedRange.length === 0) return;
 
-        // --- שלב 1: ביטול יום בודד (אם הוא כבר תפוס) ---
-        if (car.availability[index] === true) {
-            const updatedAvailability = [...car.availability];
-            updatedAvailability[index] = false; // הופך לזמין חזרה
+        const updatedAvailability = [...car.availability];
+        selectedRange.forEach(index => {
+            updatedAvailability[index] = true;
+        });
 
-            // עדכון מקומי ועדכון שרת מידי
-            setcar({ ...car, availability: updatedAvailability });
-            setStartDate(null); // מאפסים בחירת טווח אם הייתה באמצע
-
-            fetch(`http://localhost:3000/cars/${id}`, {
+        try {
+            const response = await fetch(`http://localhost:3000/cars/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ availability: updatedAvailability })
-            }).catch((err: Error) => console.error("שגיאה בביטול יום:", err));
+            });
 
-            return; // יוצאים מהפונקציה ולא ממשיכים ללוגיקה של הטווח
-        }
-
-        // --- שלב 2: לוגיקת הטווחים (כמו שעשינו קודם) ---
-        if (startDate === null) {
-            setStartDate(index);
-            const fastUpdate = [...car.availability];
-            fastUpdate[index] = true;
-            setcar({ ...car, availability: fastUpdate });
-        } else {
-            const updatedAvailability: boolean[] = [...car.availability];
-            const start = Math.min(startDate, index);
-            const end = Math.max(startDate, index);
-
-            for (let i = start; i <= end; i++) {
-                updatedAvailability[i] = true;
+            if (response.ok) {
+                setcar({ ...car, availability: updatedAvailability });
+                alert("ההזמנה אושרה בהצלחה!");
             }
-
-            setcar({ ...car, availability: updatedAvailability });
-
-            fetch(`http://localhost:3000/cars/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ availability: updatedAvailability })
-            })
-                .then((res: Response) => {
-                    if (res.ok) setStartDate(null);
-                })
-                .catch((err: Error) => console.error("שגיאה בעדכון טווח:", err));
+        } catch (error) {
+            console.error("Booking error:", error);
         }
-       };
-const handleDeleteCar = () => {
-    if (window.confirm("האם את בטוחה שברצונך למחוק את הרכב הזה לצמיתות?")) {
-        fetch(`http://localhost:3000/cars/${id}`, {
-            method: 'DELETE',
-        })
-        .then(res => {
-            if (res.ok) {
-                alert("הרכב נמחק בהצלחה");
-                navigate("/"); // חזרה לדף הבית אחרי המחיקה
-            } else {
-                alert("שגיאה בניסיון המחיקה");
-            }
-        })
-        .catch(err => console.error("Error deleting car:", err));
-    }
-};
-    
-    if (!car) return <div>טוען נתונים...</div>;
+    };
 
-    return (
-<div className="car-details-page">
+    const handleDeleteCar = () => {
+        if (window.confirm("למחוק את הרכב לצמיתות?")) {
+            fetch(`http://localhost:3000/cars/${id}`, { method: 'DELETE' })
+                .then(res => {
+                    if (res.ok) navigate("/cars");
+                });
+        }
+    };
+
+    if (!car) return <div className="text-center mt-5">טוען נתונים...</div>;
+
+return (
+    <div className="car-details-viewport">
+        <div className="compact-container">
+            
             {isAdmin && (
-            <div className="container mt-3 d-flex gap-2"> 
-                <button 
-                    className="btn btn-warning shadow-sm fw-bold" 
-                    onClick={() => navigate(`/AddNewCar`)} 
-                >
-                    ✏️ עריכת פרטי רכב
-                </button>
+                <div className="admin-mini-actions">
+                    <button className="mini-btn warn" onClick={() => navigate(`/AddNewCar`, { state: { car: { ...car } } })}>✏️</button>
+                    <button className="mini-btn danger" onClick={handleDeleteCar}>🗑️</button>
+                </div>
+            )}
+
+            <div className="compact-main-layout">
                 
-                <button 
-                    className="btn btn-danger shadow-sm fw-bold" 
-                    onClick={handleDeleteCar}
-                >
-                    🗑️ מחיקת רכב
-                </button>
-            </div>
-        )}
-                <div className="car-details-card">
-                    <img src={car.imageUrl} alt={car.company} className="car-header-image" />
-                    <div className="car-body">
-                        <h2>{car.company}</h2>
-                        <div className="specs-grid">
-                            <div className="spec-item">
-                                <span className="spec-label">שנה</span>
-                                <span className="spec-value">{car.year}</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">צבע</span>
-                                <span className="spec-value">{car.color}</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">מקומות</span>
-                                <span className="spec-value">{car.placeNumber}</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">הילוכים</span>
-                                <span className="spec-value">{car.gearType}</span>
-                            </div>
+                {/* צד ימין: תמונה + חוות דעת */}
+                <div className="column-right">
+                    <div className="image-wrapper">
+                        <img src={car.imageUrl || 'https://via.placeholder.com/400x200'} alt={car.company} />
+                    </div>
+                    
+                    <div className="opinions-section">
+                        <div className="box-header">
+                            <span className="title">חוות דעת</span>
+                            <button className="add-btn-small" onClick={() => setShowAddForm(true)}>➕ הוספה</button>
                         </div>
-                        <div className="price-section">
-                            מחיר ליום: ₪{car.priceToDay}
-                        </div>
-                        {car.availability ? (
-                            <div className="container mt-4 p-3 border rounded bg-white shadow-sm text-end" dir="rtl">
-                                <h6 className="text-center mb-4 fw-bold text-primary">לוח זמינות - 60 ימים קרובים</h6>
 
-                                <div className="row">
-                                    {/* לולאה שיוצרת שני חודשים: 0 מייצג חודש נוכחי, 1 מייצג חודש הבא */}
-                                    {/* לולאה על 3 חודשים אפשריים כדי להבטיח כיסוי מלא של 60 יום גם בסוף חודש */}
-                                    {[0, 1, 2].map((monthOffset) => {
-                                        const now = new Date();
-                                        // חישוב מדויק של החודש והשנה היעד
-                                        const targetDate = new Date(now.getFullYear(), now.getMonth() + monthOffset, 1);
-                                        const targetMonth = targetDate.getMonth();
-                                        const targetYear = targetDate.getFullYear();
-                                        const monthName = targetDate.toLocaleString('he-IL', { month: 'long' });
-                                        const hasDaysInMonth = car.availability.some((_, index) => {
-                                            const d = getRelativeDate(index);
-                                            return d.monthNum === targetMonth && new Date().getFullYear() + (d.monthNum < now.getMonth() ? 1 : 0) === targetYear;
-                                        });
-
-                                        if (!hasDaysInMonth) return null;
-
-                                        return (
-                                            <div key={monthOffset} className="col-md-6 col-lg-4 mb-4">
-                                                <h5 className="text-center border-bottom pb-2 mb-3 text-secondary">{monthName} {targetYear}</h5>
-                                                <div className="row g-2 justify-content-center">
-                                                    {car.availability.map((isOccupied, index) => {
-                                                        const dateInfo = getRelativeDate(index);
-
-                                                        // בדיקה כפולה: גם חודש וגם שנה (חשוב למעבר שנה בדצמבר-ינואר)
-                                                        const isSameMonth = dateInfo.monthNum === targetMonth;
-                                                        // חישוב שנה פשוט: אם חודש היעד קטן מהחודש הנוכחי, סימן שעברנו שנה
-                                                        const isSameYear = (new Date().getFullYear() + (dateInfo.monthNum < now.getMonth() ? 1 : 0)) === targetYear;
-
-                                                        if (!isSameMonth || !isSameYear) return null;
-
-                                                        return (
-                                                            <div key={index} className="col-auto">
-                                                                <button
-                                                                    onClick={() => handleDayClick(index)}
-                                                                    title={dateInfo.fullDate}
-                                                                    style={{ width: '45px', height: '45px' }}
-                                                                    className={`btn d-flex align-items-center justify-content-center fw-bold rounded-2 p-0
-                                    ${isOccupied ? 'btn-danger' : 'btn-outline-success'} 
-                                    ${startDate === index ? 'border-primary border-3 shadow' : ''}`}
-                                                                >
-                                                                    {dateInfo.dayNum}
-                                                                </button>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-
-                                {/* מקרא צבעים מעוצב עם Bootstrap badges */}
-                                <div className="d-flex justify-content-center gap-3 mt-2 border-top pt-3" style={{ fontSize: '0.8rem' }}>
-                                    <span className="badge bg-success">פנוי</span>
-                                    <span className="badge bg-danger">תפוס</span>
-                                    <span className="badge bg-primary">התחלת טווח</span>
-                                </div>
+                        {showAddForm && (
+                            <div className="inline-form-overlay">
+                                <AddOpinion 
+                                    idCar={car.id} 
+                                    onClose={() => setShowAddForm(false)} 
+                                    onSaved={() => {
+                                        setShowAddForm(false);
+                                        setRefreshKey(prev => prev + 1);
+                                    }} 
+                                />
                             </div>
-                        )
-                            : (
-                                <p style={{ color: 'red', textAlign: 'center' }}>שגיאה: נתוני זמינות לא נמצאו</p>
-                            )}
-                        <button className="back-btn" onClick={() => window.history.back()}>
-                            → חזרה לרשימה
-                        </button>
+                        )}
+
+                        <div className="opinions-scroll-area">
+                            <OpinionSection idCar={car.id} key={refreshKey} />
+                        </div>
                     </div>
                 </div>
+
+                {/* צד שמאל: פרטים ויומן */}
+                <div className="column-left">
+                    <div className="header-info">
+                        <h1 className="car-name">{car.company}</h1>
+                        <div className="compact-price">₪{car.priceToDay} <small>/ ליום</small></div>
+                    </div>
+                    
+                    <div className="specs-grid-mini">
+                        <div className="mini-spec"><b>שנה:</b> {car.year}</div>
+                        <div className="mini-spec"><b>צבע:</b> {car.color}</div>
+                        <div className="mini-spec"><b>מושבים:</b> {car.placeNumber}</div>
+                        <div className="mini-spec"><b>גיר:</b> {car.gearType}</div>
+                    </div>
+
+                    <div className="calendar-mini-container">
+                        <CarAvailabilityCalendar car={car} confirmBooking={confirmBooking} />
+                    </div>
+
+                    <button className="back-btn-text" onClick={() => navigate(-1)}>→ חזרה</button>
+                </div>
+
             </div>
-      
-    );
-};
-const getRelativeDate = (offset: number) => {
-    const date = new Date();
-    date.setDate(date.getDate() + offset);
-    return {
-        dayNum: date.getDate(),
-        monthNum: date.getMonth(),
-        monthName: date.toLocaleString('he-IL', { month: 'long' }),
-        fullDate: date.toLocaleDateString('he-IL')
-    };
+        </div>
+    </div>
+);
 };
 
 export default CarDetails;
+

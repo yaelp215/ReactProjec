@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Navbar.css'
+import { UserCircle, LogOut, Search, Settings } from "lucide-react";
 
-export default function Navbar() {
+type NavbarProps = {
+  onSearchClick: () => void;
+};
+
+export default function Navbar({ onSearchClick }: NavbarProps) {
+    
     const [userName, setUserName] = useState("");
     const navigate = useNavigate();
+    
 
     const checkUser = () => {
         const userData = localStorage.getItem("user")
@@ -24,24 +31,64 @@ export default function Navbar() {
         setUserName("");
         navigate("/Connection");
     };
-    return (
+   return (
         <nav className="navbar-container">
-            <div className="logo" onClick={() => navigate("/")}>
-                🚗 רכב בקליק
-            </div>
-
-            <div className="nav-links">
-                {userName ? (
-                    <div className="user-info">
-                        <span className="welcome-msg">שלום, **{userName}**</span>
-                        <button className="logout-btn" onClick={handleLogout}>התנתק</button>
+            <div className="navbar-content">
+                
+                {/* צד ימין: לוגו וקישורים מהירים */}
+                <div className="nav-right-section">
+                    <div className="brand-logo" onClick={() => navigate("/")}>
+                        <div className="logo-icon-bg">
+                         <img src="/public/Image/Logo- DRIVON.png" alt="" />
+                        </div>
+                        <span className="brand-name">DRIVON</span>
                     </div>
-                ) : (
 
-                    <button className="login-btn" onClick={() => navigate("/Connection")}>
-                        התחברות
-                    </button>
-                )}
+                    <div className="main-nav-links">
+                        <button className="nav-item-link" onClick={() => navigate("/cars")}>
+                            קטלוג רכבים
+                        </button>
+                        <button className="nav-item-link search-trigger" onClick={onSearchClick}>
+                            <Search size={18} />
+                            חיפוש
+                        </button>
+                    </div>
+                </div>
+
+                {/* צד שמאל: פרטי משתמש */}
+                <div className="nav-left-section">
+                    {userName ? (
+                        <div className="user-profile-zone">
+                            <div className="user-welcome">
+                                <span className="hello-text">שלום,</span>
+                                <span className="user-name-bold">{userName}</span>
+                            </div>
+                            
+                            <div className="action-icons">
+                                <button 
+                                    className="icon-action-btn" 
+                                    title="עריכת פרופיל"
+                                    onClick={() => navigate("/login", { state: { editMode: true } })}
+                                >
+                                    <Settings size={20} />
+                                </button>
+                                
+                                <button 
+                                    className="icon-action-btn logout-accent" 
+                                    title="התנתק"
+                                    onClick={handleLogout}
+                                >
+                                    <LogOut size={20} />
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <button className="primary-login-btn" onClick={() => navigate("/Connection")}>
+                            <UserCircle size={20} />
+                            התחברות
+                        </button>
+                    )}
+                </div>
             </div>
         </nav>
     );

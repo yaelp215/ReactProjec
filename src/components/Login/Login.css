@@ -1,99 +1,104 @@
-/* מרכז את הטופס במסך */
-.form-wrapper {
+/* ה-Overlay עם הטשטוש */
+.login-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #f4f7f6; /* רקע בהיר ונעים */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 9999;
 }
 
-/* מיכל הטופס */
-.form-container {
-    background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+/* המכולה הכחולה שמהווה את המסגרת החיצונית */
+.register-modal-frame {
+    background: #0076ff; /* הכחול של המותג */
+    padding: 25px;       /* עובי המסגרת הכחולה */
+    border-radius: 40px; /* פינות מעוגלות מאוד כמו בתמונה */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     width: 100%;
-    max-width: 400px;
-    direction: rtl; /* תמיכה בעברית */
+    max-width: 450px;    /* רוחב של טופס יחיד */
+    animation: fadeInPop 0.4s ease-out;
+    direction: rtl;
 }
 
-.form-container h2 {
+/* החלק הלבן הפנימי */
+.form-section-white {
+    background: white;
+    border-radius: 30px; /* פינות מעוגלות פנימיות */
+    padding: 35px 30px;
+    position: relative;
+}
+
+.form-inner h3 {
+    color: #0076ff;
+    font-size: 24px;
+    margin-bottom: 25px;
     text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+    font-weight: bold;
 }
 
 /* עיצוב השדות */
-.form-container div {
-    margin-bottom: 1.2rem;
+.input-group {
+    margin-bottom: 15px;
 }
 
-.form-container input {
+.input-group input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    box-sizing: border-box; /* חשוב כדי שהפדינג לא יהרוס את הרוחב */
-    transition: border-color 0.3s ease;
-}
-
-.form-container input:focus {
-    border-color: #007bff;
+    padding: 14px;
+    background: #f0f4f8;
+    border: 1px solid #d1d9e0;
+    border-radius: 12px;
+    font-size: 16px;
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    box-sizing: border-box;
 }
 
-/* עיצוב שגיאות */
+.input-group input:focus {
+    border-color: #0076ff;
+    background: white;
+}
+
+/* כפתור השליחה הכחול */
+.login-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #0076ff;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.login-submit-btn:hover {
+    background: #0056cc;
+}
+
+/* כפתור סגירה פנימי (X) */
+.close-btn-dark {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 .error-text {
-    color: #dc3545;
-    font-size: 0.85rem;
-    margin-top: 5px;
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 4px;
     display: block;
 }
 
-/* כפתור ראשי */
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* כפתור הרשמה/מעבר */
-.register-btn {
-    background: none;
-    border: 1px solid #007bff;
-    color: #007bff;
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-}
-
-.register-btn:hover {
-    background-color: #f0f7ff;
-}
-
-.form-container p {
-    text-align: center;
-    margin-top: 20px;
-    color: #666;
-    font-size: 0.9rem;
+@keyframes fadeInPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }

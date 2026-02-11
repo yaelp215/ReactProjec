@@ -1,0 +1,115 @@
+/* =========================
+   מודאל צף למעלה
+========================= */
+.search-overlay {
+  position: fixed;
+  top: 70px; /* כמה פיקסלים מתחת ל־Navbar */
+  left: 50%; /* מרכז אופקי */
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 1200px;
+  background-color: #0076ff;
+  padding: 25px 30px;
+  border-radius: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* סרגל פנימי */
+.drivon-pill-bar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* בלוקים לבנים */
+.drivon-input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    background: #ffffff;
+    padding: 12px 20px;  
+    border-radius: 18px;
+    min-height: 65px;  
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+}
+
+.drivon-input-group:hover {
+    transform: translateY(-3px);
+}
+
+/* כותרת */
+.drivon-input-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0076ff;
+    margin-bottom: 3px;
+}
+
+/* טקסט */
+.drivon-input-group select,
+.drivon-input-group input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    width: 100%;
+}
+
+/* סליידר */
+.drivon-range {
+    cursor: pointer;
+    accent-color: #ffffff;
+    height: 4px;
+}
+
+/* כפתור חיפוש */
+.drivon-search-btn {
+    background: #ffffff;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    align-self: flex-end;
+    margin-bottom: 10px;
+}
+
+.drivon-search-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #0076ff;
+}
+
+.drivon-search-btn:hover {
+    transform: translateY(-4px);
+    background: #f4f7ff;
+}
+
+/* מובייל */
+@media (max-width: 900px) {
+    .drivon-pill-bar {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .drivon-search-btn {
+        width: 100%;
+        height: 55px;
+    }
+}

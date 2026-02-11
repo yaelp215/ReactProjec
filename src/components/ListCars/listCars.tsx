@@ -3,16 +3,20 @@ import type {Car} from '../Models/car';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-
+import { useLocation } from 'react-router-dom';
+import  CarFilter from "../Filter/Filter"
 interface ListCarProps{
     isAdmin: boolean;
 }
 const ListCar: React.FC<ListCarProps> = ({isAdmin})=>{
+   const location = useLocation();
     const navigate = useNavigate();
     const [cars, setcars] = useState<Car[]>([]);
 
     useEffect (() => {
-        axios.get("http://localhost:3000/cars")
+        const currentQuery = location.search;
+        console.log("פונה לכתובת:",currentQuery);
+        axios.get(`http://localhost:3000/cars${currentQuery}`)
         .then(response =>{
             console.log("הנתונים שהתקבלו:", response.data);
            setcars(response.data);
@@ -22,10 +26,10 @@ const ListCar: React.FC<ListCarProps> = ({isAdmin})=>{
         });
         
 
-    }, []);
+    }, [location.search]);
     return(
         <div>
-<div className="container">     
+<div className="container-fluid">    
     {isAdmin && (
         <button className="btn- btn-success mb-3"
         onClick={() => navigate("/AddNewCar")}>הוספת רכב חדש</button>

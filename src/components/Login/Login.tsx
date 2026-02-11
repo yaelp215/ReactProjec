@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import './Login.css';
 import type { user } from "../Models/user"
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 function isValidIsraeliPhone(phone?: string) {
     if (!phone) return false;
@@ -12,6 +12,9 @@ function isValidIsraeliPhone(phone?: string) {
 };
 
 export default function MyForm() {
+    const location = useLocation();
+    const isEditMode = location.state?.editMode;
+    const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     const navigate = useNavigate();
     const [users, setUsers] = useState<user[]>([]);
 
@@ -19,7 +22,7 @@ export default function MyForm() {
         fetch("http://localhost:3000/users")
             .then(res => res.json())
             .then(data => {
-                setUsers(data); // מעדכן את הרשימה בזיכרון
+                setUsers(data); 
                 console.log("נתונים שנטענו מה-DB:", data);
             })
             .catch(err => console.error("שגיאה בטעינה:", err));
@@ -32,7 +35,7 @@ export default function MyForm() {
             .typeError("יש להזין מספר בלבד")
             .required("חובה לציין שנת לידה")
             .min(1920, "שנה לא תקינה")
-            .max(2010, "ההרשמה מגיל 16 ומעלה"), // דוגמה ללוגיקה
+            .max(2010, "ההרשמה מגיל 16 ומעלה"), 
         password: Yup.string()
             .required("שדה חובה")
             .test("is-admin-or-strong", "הסיסמה אינה עומדת באבטחה", (value) => {
@@ -42,28 +45,33 @@ export default function MyForm() {
                 const hasLowerCase = /[a-z]/.test(value || "");
                 const hasNumber = /[0-9]/.test(value || "");
                 const hasSpecialChar = /[!@#$%^&*]/.test(value || "");
-
-                // בדיקה שכולם מתקיימים
                 if (hasMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
                     return true;
                 }
             }),
-            // .min(8, "הסיסמה חייבת להיות לפחות 8 תווים")
-            // .matches(/[A-Z]/, "חייבת לכלול לפחות אות גדולה")
-            // .matches(/[a-z]/, "חייבת לכלול לפחות אות קטנה")
-            // .matches(/[0-9]/, "חייבת לכלול לפחות ספרה")
-            // .matches(/[!@#$%^&*]/, "חייבת לכלול לפחות תו מיוחד"),
         phone: Yup.string()
             .required("חובה להכניס מספר טלפון")
             .test("is-valid-phone", "מספר טלפון לא תקין", value => isValidIsraeliPhone(value)),
         email: Yup.string()
-            .email("כתובת מייל לא תקינה") // שימוש בוולידציה המובנית של Yup
+            .email("כתובת מייל לא תקינה") 
             .required("חובה להכניס מייל"),
     });
+return (
+    <div className="login-overlay"> 
+        <div className="register-modal-frame"> 
+            <div className="form-section-white">
+                  <Formik
+        enableReinitialize={true}
 
-    return (
-        <Formik
-            initialValues={{
+            initialValues={
+                isEditMode && storedUser ?{
+                    firstName: storedUser.firstName,
+        lastName: storedUser.lastName,
+        year: storedUser.year,
+        password: storedUser.password,
+        phone: storedUser.phone,
+        email: storedUser.email,
+                }:{
                 firstName: "",
                 lastName: "",
                 year: "",
@@ -72,72 +80,76 @@ export default function MyForm() {
                 email: "",
             }}
             validationSchema={validationSchema}
-            onSubmit={async (values, { resetForm }) => {
-                const newUser = { ...values, id: Date.now().toString() } as user;
-                try {
-                    const response = await fetch("http://localhost:3000/users", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(newUser),
-                    });
+     onSubmit={async (values) => {
+    try {
+        const url = isEditMode 
+            ? `http://localhost:3000/users/${storedUser.id}` 
+            : "http://localhost:3000/users"; 
 
-                    if (response.ok) {
-                        setUsers((prevUsers) => {
-                            const updatedList = [...prevUsers, newUser];
-                            console.log("רשימה מעודכנת לאחר שמירה ב-DB:", updatedList);
-                            return updatedList;
-                        });
+        const method = isEditMode ? "PUT" : "POST";
 
-                        resetForm();
-                        alert("המשתמש נשמר ב-DB בהצלחה!");
-                        navigate("/Connection");
-                    } else {
-                        alert("הייתה בעיה בשמירת המשתמש בשרת.");
-                    }
-                } catch (err) {
-                    console.error("שגיאה בתקשורת עם השרת:", err);
-                    alert("לא ניתן לגשת לשרת. וודאי ש-json-server רץ.");
-                }
-            }}
+        const response = await fetch(url, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(isEditMode ? { ...values, id: storedUser.id } : { ...values, id: Date.now().toString() }),
+        });
+
+        if (response.ok) {
+            if (isEditMode) {
+                localStorage.setItem("user", JSON.stringify({ ...values, id: storedUser.id }));
+                window.dispatchEvent(new Event("storage"));
+                alert("הפרטים עודכנו בהצלחה!");
+            } else {
+                alert("נרשמת בהצלחה!");
+            }
+            navigate("/cars"); // חזרה לדף הבית
+        }
+    } catch (err) {
+        console.error("Error:", err);
+    }
+}}
         >
-            <Form className="form-container">
-                <div>
-                    <Field name="firstName" placeholder="שם פרטי" />
-                    <ErrorMessage name="firstName" component="span" className="error-text" />
-                </div>
+                    <Form className="form-inner">
+                        <h3>{isEditMode ? "עדכון פרטים" : "הרשמה למערכת"}</h3>
+                        
+                        <div className="input-group">
+                            <Field name="firstName" placeholder="שם פרטי" />
+                            <ErrorMessage name="firstName" component="span" className="error-text" />
+                        </div>
 
-                <div>
-                    <Field name="lastName" placeholder="שם משפחה" />
-                    <ErrorMessage name="lastName" component="span" className="error-text" />
-                </div>
+                        <div className="input-group">
+                            <Field name="lastName" placeholder="שם משפחה" />
+                            <ErrorMessage name="lastName" component="span" className="error-text" />
+                        </div>
 
-                <div>
-                    <Field type="number" name="year" placeholder="שנת לידה" />
-                    <ErrorMessage name="year" component="span" className="error-text" />
-                </div>
+                        <div className="input-group">
+                            <Field type="number" name="year" placeholder="שנת לידה" />
+                            <ErrorMessage name="year" component="span" className="error-text" />
+                        </div>
 
-                <div>
-                    <Field type="password" name="password" placeholder="סיסמה" />
-                    <ErrorMessage name="password" component="span" className="error-text" />
-                </div>
+                        <div className="input-group">
+                            <Field type="password" name="password" placeholder="סיסמה" />
+                            <ErrorMessage name="password" component="span" className="error-text" />
+                        </div>
 
-                <div>
-                    <Field name="phone" placeholder="טלפון" />
-                    <ErrorMessage name="phone" component="span" className="error-text" />
-                </div>
+                        <div className="input-group">
+                            <Field name="phone" placeholder="טלפון" />
+                            <ErrorMessage name="phone" component="span" className="error-text" />
+                        </div>
 
-                <div>
-                    <Field name="email" type="email" placeholder="מייל" />
-                    <ErrorMessage name="email" component="span" className="error-text" />
-                </div>
+                        <div className="input-group">
+                            <Field name="email" type="email" placeholder="מייל" />
+                            <ErrorMessage name="email" component="span" className="error-text" />
+                        </div>
 
-                <button type="submit" >שלח</button>
-            </Form>
-
-        </Formik>
-
-    );
+                        <button type="submit" className="login-submit-btn">שלח</button>
+                    </Form>
+                </Formik>
+                
+                <button className="close-btn-dark" onClick={() => navigate("/")}>×</button>
+            </div>
+        </div>
+    </div>
+);
 
 };

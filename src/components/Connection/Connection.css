@@ -1,0 +1,145 @@
+.login-overlay {
+    position: fixed; /* חשוב מאוד! זה מה שמוציא אותו מהזרימה הרגילה של הדף */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center; /* מרכז אופקית */
+    align-items: center;    /* מרכז אנכית */
+    z-index: 9999;          /* מוודא שזה מעל הכל */
+}
+
+.login-modal-container {
+    background: #0076ff; /* הכחול של אלדן */
+    width: 900px;
+    height: 520px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    border: 3px solid white;
+    animation: fadeInPop 0.5s ease-out forwards;
+}
+@keyframes fadeInPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px; right: 25px;
+    background: none; border: none;
+    color: white; font-size: 35px;
+    cursor: pointer; z-index: 10;
+}
+
+.modal-content-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+/* הצד הכחול */
+.info-section {
+    flex: 1.2;
+    padding: 30px;
+    display: flex;
+    flex-direction: column; /* מסדר את האלמנטים אחד מתחת לשני */
+    align-items: center;    /* ממרכז אותם אופקית */
+    justify-content: flex-start; /* מתחיל את התוכן מלמעלה */
+    text-align: center;
+}
+.info-section h1 {
+    color: #ffcc00; 
+    font-size: 28px;      /* הקטנו קצת כדי שייכנס בשורה אחת */
+    font-weight: 800;
+    white-space: nowrap;  /* מונע מהטקסט לרדת שורה */
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+/* כיתוב ה-VIP הקטן מתחת לצהוב */
+.subtitle {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 30px; /* רווח לפני התמונה */
+}
+
+/* התמונה ממורכזת באמצע */
+.car-image {
+    width: 85%;           /* גודל מתאים למרכז */
+    max-width: 350px;
+    height: auto;
+    margin: 0 auto;       /* מוודא מרכוז */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    /* הסרתי את ה-transform כדי שלא יקפוץ הצידה */
+}
+
+/* הצד הלבן */
+.form-section {
+    flex: 0.8;
+    background: white;
+    margin: 20px;
+    border-radius: 20px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-inner h3 {
+    color: #0076ff;
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    background: #f0f4f8;
+    border: 1px solid #d1d9e0;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.login-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #004fb1;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-submit-btn:hover {
+    background: #003a82;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.register-footer {
+    margin-top: auto;
+    text-align: center;
+}
+
+.btn-register-link {
+    background: none; border: none;
+    color: #0076ff; font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}

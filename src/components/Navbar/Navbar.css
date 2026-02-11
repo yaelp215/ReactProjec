@@ -1,21 +1,181 @@
 .navbar-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 118, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    direction: rtl;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-content {
+    max-width: 100%; /* שינינו מ-1200 ל-100% */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    direction: rtl; /* חשוב לעברית */
+    width: 100%; 
+    padding: 0 20px; /* אופציונלי: מוסיף קצת מרווח בצדדים כדי שהתוכן לא יידבק לקצה המסך */
 }
+    
+   
 
-.user-info {
+/* לוגו */
+.brand-logo {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    cursor: pointer;
 }
 
-.logo {
+.logo-icon-bg {
+    background: linear-gradient(135deg, #0076ff, #001f3f);
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 900;
+    color: #001f3f;
+    letter-spacing: 1px;
+}
+
+/* ניווט מרכזי */
+.nav-right-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.main-nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item-link {
+    background: none;
+    border: none;
+    color: #4a5568;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.nav-item-link:hover {
+    color: #0076ff;
+}
+
+/* צד שמאל - פרופיל */
+.user-profile-zone {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #f8faff;
+    padding: 5px 15px;
+    border-radius: 50px;
+    border: 1px solid #edf2f7;
+}
+
+.user-welcome {
+    display: flex;
+    gap: 5px;
+    font-size: 15px;
+}
+
+.user-name-bold {
+    font-weight: 800;
+    color: #0076ff;
+}
+
+.action-icons {
+    display: flex;
+    gap: 10px;
+    border-right: 1px solid #e2e8f0;
+    padding-right: 10px;
+}
+
+.icon-action-btn {
+    background: none;
+    border: none;
+    color: #718096;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.icon-action-btn:hover {
+    color: #0076ff;
+    transform: translateY(-2px);
+}
+
+.logout-accent:hover {
+    color: #ff4d4d;
+}
+
+/* כפתור התחברות (כשאין משתמש) */
+.primary-login-btn {
+    background: #0076ff;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
     font-weight: bold;
-    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.primary-login-btn:hover {
+    background: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 118, 255, 0.3);
+}
+.brand-logo img {
+    height: 45px;       /* מקטין את הגובה כך שיכנס בסרגל של 70px */
+    width: auto;        /* שומר על הפרופורציות של הלוגו */
+    object-fit: contain; /* מוודא שהתמונה לא תימרח */
+    display: block;      /* מבטל רווחים מיותרים מתחת לתמונה */
+}
+
+/* מוודא שהמיכל של הלוגו לא חורג מהסרגל */
+.brand-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;       /* מתיישר לפי גובה ה-Navbar */
+}
+.navbar-container {
+    position: fixed; /* שינוי ל-fixed מבטיח היצמדות לקצוות */
+    top: 0;
+    left: 0;
+    width: 100vw; /* רוחב מסך מלא */
+    height: 70px;
+    background: white;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+}
+
+.navbar-content {
+   
+}
+
+/* הגבלת גודל הלוגו באופן קשיח */
+.logo-img {
+    max-height: 50px !important;
+    width: auto !important;
 }
