@@ -12,8 +12,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"
 
 export default function App() {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+    return localStorage.getItem('isAdmin') === 'true';
+})
 
   return (
     <BrowserRouter> 

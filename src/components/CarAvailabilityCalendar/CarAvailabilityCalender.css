@@ -1,0 +1,218 @@
+/* --- קונטיינר ראשי של הלוח --- */
+.calendar-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    max-width: fit-content;
+    margin: auto;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar-main-title {
+    text-align: center;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* --- תצוגת חודשים אחד ליד השני --- */
+.months-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center;
+}
+
+.month-section {
+    width: 175px; 
+}
+
+.month-title {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #007bff;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.weekday-header {
+    text-align: center;
+    font-size: 0.65rem;
+    color: #bbb;
+    font-weight: bold;
+    padding-bottom: 3px;
+}
+
+/* --- עיצוב הימים --- */
+.day-cell {
+    aspect-ratio: 1/1;
+    border: none;
+    background: #f8f9fa;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    padding: 0;
+}
+
+.day-cell.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.day-cell.available {
+    color: #888; /* צבע ניטרלי יותר */
+    background: #f0f0f0;
+}
+
+.day-cell.available:hover {
+    background: #007bff;
+    color: #fff;
+}
+
+.day-cell.occupied {
+    background: #fff0f0;
+    color: #ff8080;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.day-cell.selected {
+    background: #007bff;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+/* --- מקרא (Legend) צבעוני בשורה אחת --- */
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    width: 100%;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.legend-item.available { color: #888; } 
+.legend-item.occupied { color: #dc3545; } 
+.legend-item.selected { color: #007bff; } 
+
+.box {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.box.available { background: #f0f0f0; border: 1px solid #ddd; }
+.box.occupied { background: #dc3545; }
+.box.selected { background: #007bff; }
+
+/* --- סיכום הזמנה מינימליסטי (כחול-לבן) --- */
+.booking-summary {
+    background: #e9ebed; /* כחול נקי */
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 320px; /* קטן וקומפקטי */
+    box-sizing: border-box;
+}
+
+.summary-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 4px;
+}
+
+.summary-info span {
+    color: #3701e6;
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.summary-info strong {
+    color: #ffffff; /* הכל בלבן */
+    font-weight: 700;
+}
+
+.price-tag {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+}
+
+.price-tag::before {
+    content: '₪';
+    font-size: 0.75rem;
+    margin-left: 2px;
+}
+
+.summary-actions {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.btn-confirm {
+    flex: 2;
+    background: #ffffff; /* כפתור לבן נקי */
+    color: #007bff;
+    border: none;
+    padding: 6px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirm:hover {
+    background: #f0f0f0;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 6px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

@@ -4,10 +4,11 @@
     display: flex;
     justify-content: center;
     align-items: center; /* משאיר אותו במרכז */
-    height: 100vh;
+     min-height: 100vh;
+     width: 100vw;
     background-color: #f0f2f5;
     /* --- הוספתי רק את זה --- */
-    padding-top: 80px;  /* דוחף את הכל קצת למטה שהבר לא יסתיר */
+    padding-top: 0;  /* דוחף את הכל קצת למטה שהבר לא יסתיר */
     box-sizing: border-box;
     overflow: hidden;
     position: relative; 

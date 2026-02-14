@@ -1,0 +1,82 @@
+.car-custom-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* אפקט במעבר עכבר - הופך את הכרטיס ליותר חי */
+.car-custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.car-custom-card .badge {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+.car-custom-card .card-title {
+    color: #333;
+}
+/* הגבלת גובה התמונה כדי לחסוך מקום */
+.car-custom-card .card-img-top {
+    height: 15vh !important; /* גובה דינמי לפי גובה המסך */
+    object-fit: contain;
+}
+
+/* צמצום מרווחים פנימיים בכרטיס */
+.car-custom-card .card-body {
+    padding: 0.5rem 1rem !important;
+}
+
+/* ביטול שוליים מיותרים בטקסטים */
+.car-custom-card h5 {
+    font-size: 1.1rem;
+    margin-bottom: 2px !important;
+}
+
+/* צמצום המרווח בין השורות של הגריד */
+.g-4, .gy-4 {
+    --bs-gutter-y: 1rem !important; 
+}
+
+/* מניעת גלילה במידת האפשר על הקונטיינר הראשי */
+.main-list-container {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* הקונטיינר של הכרטיס חייב להיות relative כדי שהלוגו יצמד אליו */
+.car-custom-card {
+    position: relative;
+    overflow: hidden; /* מבטיח שהעיגול לא יצא מהגבולות המעוגלים של הכרטיס */
+    transition: transform 0.2s;
+}
+
+/* העיצוב של עיגול הלוגו הפיצי */
+.car-brand-badge {
+    position: absolute;
+    top: 10px;    /* מרחק מהלמעלה */
+    right: 10px;  /* מרחק מהצד (ימין כי האתר ב-RTL) */
+    background-color: #007bff; /* הכחול של המותג */
+    width: 50px;  /* גודל העיגול - פיצי */
+    height: 40px;
+    border-radius: 50%; /* הופך לעיגול */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* צל קטן שיראה יוקרתי */
+    border: 1.5px solid white; /* מסגרת לבנה דקה שתפריד מהתמונה */
+}
+
+/* עיצוב התמונה בתוך העיגול */
+.car-brand-badge img {
+    width: 78px;  /* הלוגו עצמו בתוך העיגול */
+    height: 49px;
+    object-fit: contain;
+    /* אם הלוגו שלך כהה ובא לך שיהיה לבן נקי, תשחררי את השורה הבאה: */
+    /* filter: brightness(0) invert(1); */
+}

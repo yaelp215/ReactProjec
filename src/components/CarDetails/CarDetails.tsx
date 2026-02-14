@@ -7,7 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import OpinionSection from '../Opinion/Opinion';
 import CarAvailabilityCalendar from '../CarAvailabilityCalendar/CarAvailabilityCalendar';
-import AddOpinion from '../Addopinion/Addopinion'; // ייבוא הקומפוננטה החדשה
+import AddOpinion from '../Addopinion/Addopinion';
+import Swal from 'sweetalert2'; // ייבוא הקומפוננטה החדשה
 
 interface CarDetailsProps {
     isAdmin: boolean;
@@ -45,7 +46,23 @@ const CarDetails: React.FC<CarDetailsProps> = ({ isAdmin }) => {
 
             if (response.ok) {
                 setcar({ ...car, availability: updatedAvailability });
-                alert("ההזמנה אושרה בהצלחה!");
+               await Swal.fire({
+                title: '!ההזמנה אושרה בהצלחה',
+                html: `
+                    <div style="text-align: center;">
+                        <div style="background-color: #0076ff; padding: 20px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">
+                            <img src="/public/Image/Logo- DRIVON.png" alt="Drivon Logo" class="swal-order-animation" style="width: 130px;">
+                        </div>
+                        <p>איזה כיף! הרכב מחכה רק לך.</p>
+                    </div>
+                `,
+                confirmButtonText: 'מעולה, תודה!',
+                confirmButtonColor: '#0076ff',
+                customClass: { popup: 'my-swal-order-popup' }
+              }).then(() => {
+                                            navigate('/cars');
+                                        });
+      
             }
         } catch (error) {
             console.error("Booking error:", error);

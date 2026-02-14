@@ -143,3 +143,12 @@
     text-decoration: underline;
     cursor: pointer;
 }
+.swal2-container {
+    z-index: 11000 !important; /* מספר גבוה יותר מכל מה שיש לך בדף */
+}
+
+.my-swal-popup {
+    border-radius: 45px !important;
+    border: 8px solid #0076ff !important;
+    z-index: 11001 !important;
+}

@@ -1,0 +1,67 @@
+.opinion-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* רקע כהה שקוף */
+    
+    /* הוספת הטשטוש למטה */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* תמיכה ב-Safari */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* מוודא שזה מעל הכל */
+}
+
+.opinion-modal-card {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 35px;
+    border-radius: 45px; /* עיגול פינות משמעותי לפי התמונה */
+    border: 12px solid #007bff; /* המסגרת הכחולה העבה מה-UI שלך */
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-title {
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.opinion-input {
+    width: 100%;
+    border: none;
+    background-color: #f1f3f6;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 25px;
+    resize: none;
+    outline: none;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.submit-btn {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #004494;
+    transform: scale(1.02); /* אפקט לחיצה קטן */
+}

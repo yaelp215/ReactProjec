@@ -1,115 +1,110 @@
-/* =========================
-   מודאל צף למעלה
-========================= */
+/* Filter.css */
+
+/* ה-Overlay שמכסה את כל המסך */
 .search-overlay {
-  position: fixed;
-  top: 70px; /* כמה פיקסלים מתחת ל־Navbar */
-  left: 50%; /* מרכז אופקי */
-  transform: translateX(-50%);
-  width: 95%;
-  max-width: 1200px;
-  background-color: #0076ff;
-  padding: 25px 30px;
-  border-radius: 35px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  z-index: 3000;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2); /* כהות עדינה מאוד */
+    backdrop-filter: blur(8px); /* טשטוש הרקע כמו במודאל חוות הדעת */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* מציב את החיפוש למעלה */
+    padding-top: 100px; /* מרחק מה-Navbar */
 }
 
-/* סרגל פנימי */
+/* הקונטיינר הלבן השקוף (הגלולה) */
 .drivon-pill-bar {
     display: flex;
     align-items: center;
-    gap: 18px;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.9); /* לבן שקוף */
+    padding: 8px 15px;
+    border-radius: 60px; /* עיגול מושלם */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    gap: 10px;
 }
 
-/* בלוקים לבנים */
+/* קבוצות הקלט (חברה, צבע וכו') */
 .drivon-input-group {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    background: #ffffff;
-    padding: 12px 20px;  
-    border-radius: 18px;
-    min-height: 65px;  
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    transition: 0.2s ease;
+    padding: 5px 15px;
+    border-right: 1px solid #e0e0e0; /* קו מפריד בין הקטגוריות */
+    min-width: 120px;
 }
 
-.drivon-input-group:hover {
-    transform: translateY(-3px);
+/* הסרת הקו המפריד מהקבוצה האחרונה */
+.drivon-input-group:last-of-type {
+    border-right: none;
 }
 
-/* כותרת */
 .drivon-input-group label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #0076ff;
-    margin-bottom: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #0076ff; /* הכחול של המותג */
+    margin-bottom: 2px;
+    text-align: right;
 }
 
-/* טקסט */
-.drivon-input-group select,
+/* עיצוב ה-Select וה-Input בתוך הגלולה */
+.drivon-input-group select, 
 .drivon-input-group input {
     border: none;
-    outline: none;
     background: transparent;
-    font-size: 16px;
-    font-weight: 600;
-    color: #222;
-    width: 100%;
-}
-
-/* סליידר */
-.drivon-range {
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    font-family: inherit;
     cursor: pointer;
-    accent-color: #ffffff;
-    height: 4px;
 }
 
-/* כפתור חיפוש */
+/* כפתור החיפוש העגול */
 .drivon-search-btn {
-    background: #ffffff;
+    background: #0076ff;
     border: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 18px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: 0.25s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    align-self: flex-end;
-    margin-bottom: 10px;
-}
-
-.drivon-search-btn svg {
-    width: 24px;
-    height: 24px;
-    fill: #0076ff;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 118, 255, 0.3);
 }
 
 .drivon-search-btn:hover {
-    transform: translateY(-4px);
-    background: #f4f7ff;
+    transform: scale(1.1);
+    background: #0056b3;
 }
 
-/* מובייל */
-@media (max-width: 900px) {
+.drivon-search-btn svg {
+    fill: white !important; /* הופך את האייקון ללבן על רקע כחול */
+}
+
+/* עיצוב פס המחיר (Range) */
+.drivon-range {
+    width: 100%;
+    height: 4px;
+    accent-color: #0076ff;
+    cursor: pointer;
+}
+
+/* התאמה לניידים - הופך את הגלולה לטור אם המסך צר */
+@media (max-width: 768px) {
     .drivon-pill-bar {
         flex-direction: column;
-        width: 95%;
+        border-radius: 30px;
+        padding: 20px;
     }
-
-    .drivon-search-btn {
+    .drivon-input-group {
+        border-right: none;
+        border-bottom: 1px solid #eee;
         width: 100%;
-        height: 55px;
+        padding: 10px 0;
     }
 }

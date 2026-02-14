@@ -2,11 +2,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import "./Connection.css"
+import Swal from 'sweetalert2';
 interface LoginFormProps {
     setIsAdmin: (value: boolean) => void;
 }
 
-export default function LoginForm({ setIsAdmin }: LoginFormProps) {
+
+const LoginForm: React.FC<LoginFormProps> = ({ setIsAdmin }) => {
+
     const navigate = useNavigate();
 
     const loginSchema = Yup.object({
@@ -20,26 +23,26 @@ export default function LoginForm({ setIsAdmin }: LoginFormProps) {
     return (
         <div className="login-overlay">
             <div className="login-modal-container">
-               
+
                 <button className="close-btn" onClick={() => navigate('/')}>×</button>
 
                 <div className="modal-content-wrapper">
-                    
-                  
+
+
                     <div className="info-section">
                         <div className="text-content">
-                         <h1>המפתחות לרכב הבא שלך מחכים לך בפנים</h1>
+                            <h1>המפתחות לרכב הבא שלך מחכים לך בפנים</h1>
                             <p className="subtitle">התחברו למערכת ותיהנו משירות VIP</p>
                         </div>
-                    
-                        <img 
-                            src="/public/Image/Logo- DRIVON.png" 
-                            alt="Car" 
-                            className="car-image" 
+
+                        <img
+                            src="/public/Image/Logo- DRIVON.png"
+                            alt="Car"
+                            className="car-image"
                         />
                     </div>
 
-                  
+
                     <div className="form-section">
                         <Formik
                             initialValues={{ email: "", password: "" }}
@@ -54,16 +57,40 @@ export default function LoginForm({ setIsAdmin }: LoginFormProps) {
                                         const user = data[0];
                                         if (values.password === "AAAAAA") {
                                             setIsAdmin(true);
+                                            localStorage.setItem('isAdmin', 'true');
                                             console.log("המשתמש מנהל");
                                         } else {
                                             setIsAdmin(false);
                                         }
-                                        alert(`ברוך הבא, ${user.firstName}!`);
                                         localStorage.setItem("user", JSON.stringify(user));
                                         window.dispatchEvent(new Event("storage"));
-                                        navigate('/cars');
+                                        Swal.fire({
+                                            title: `!ברוך הבא, ${user?.firstName}`,
+                                            text: 'התחברת בהצלחה למערכת',
+                                            icon: 'success',
+                                            confirmButtonColor: '#0076ff',
+                                            allowOutsideClick: false,
+                                            timer: 2000,
+                                            timerProgressBar: true,
+                                            showConfirmButton: false
+                                        }).then(() => {
+                                            navigate('/cars');
+                                        });
+
+
+
                                     } else {
-                                        alert("פרטי התחברות שגויים");
+                                        Swal.fire({
+                                            title: 'אופס... משהו השתבש',
+                                            text: 'המייל או הסיסמה שהזנת אינם נכונים. נסי שוב!',
+                                            icon: 'error',
+                                            confirmButtonText: 'הבנתי, אנסה שוב',
+                                            confirmButtonColor: '#d33', // צבע אדום לשגיאה
+                                            target: 'body', // מבטיח שזה יצוף מעל הכל
+                                            customClass: {
+                                                popup: 'my-swal-error-popup'
+                                            }
+                                        });
                                     }
                                 } catch (err) {
                                     console.error("שגיאה:", err);
@@ -73,7 +100,7 @@ export default function LoginForm({ setIsAdmin }: LoginFormProps) {
                         >
                             <Form className="form-inner">
                                 <h3>התחברות למערכת</h3>
-                                
+
                                 <div className="input-group">
                                     <Field name="email" type="email" placeholder="אימייל" />
                                     <ErrorMessage name="email" component="span" className="error-text" />
@@ -106,3 +133,4 @@ export default function LoginForm({ setIsAdmin }: LoginFormProps) {
         </div>
     );
 }
+export default LoginForm;

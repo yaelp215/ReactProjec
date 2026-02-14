@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Navbar.css'
-import { UserCircle, LogOut, Search, Settings } from "lucide-react";
+import { UserCircle, LogOut, Search , UserRoundPen } from "lucide-react";
 
-type NavbarProps = {
-  onSearchClick: () => void;
-};
+interface NavbarProps {
+    onSearchClick: () => void;
+}
 
-export default function Navbar({ onSearchClick }: NavbarProps) {
+const Navbar: React.FC<NavbarProps> = ({ onSearchClick }) =>{
     
     const [userName, setUserName] = useState("");
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function Navbar({ onSearchClick }: NavbarProps) {
     }, [])
     const handleLogout = () => {
         localStorage.removeItem("user");
+        localStorage.removeItem('isAdmin');
         setUserName("");
         navigate("/Connection");
     };
@@ -70,7 +71,7 @@ export default function Navbar({ onSearchClick }: NavbarProps) {
                                     title="עריכת פרופיל"
                                     onClick={() => navigate("/login", { state: { editMode: true } })}
                                 >
-                                    <Settings size={20} />
+                                    <UserRoundPen size={20} />
                                 </button>
                                 
                                 <button 
@@ -93,3 +94,4 @@ export default function Navbar({ onSearchClick }: NavbarProps) {
         </nav>
     );
 } 
+export default Navbar;
