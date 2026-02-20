@@ -6,7 +6,7 @@ export const LandingPage = ({ setIsAdmin }: { setIsAdmin: (val: boolean) => void
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
-    // המודאל יופיע אחרי 2.5 שניות
+  
     const timer = setTimeout(() => {
       setShowLogin(true);
     }, 5000);
@@ -16,7 +16,7 @@ export const LandingPage = ({ setIsAdmin }: { setIsAdmin: (val: boolean) => void
 
   return (
     <div className="landing-outer-wrapper">
-      {/* דף הנחיתה עם הרקע והרכב */}
+ 
       <div className={`landing-container ${showLogin ? 'blurred' : ''}`}>
         <div className="background-decor">
           <div className="circle circle-1"></div>
@@ -35,7 +35,7 @@ export const LandingPage = ({ setIsAdmin }: { setIsAdmin: (val: boolean) => void
         </div>
       </div>
 
-      {/* שכבת המודאל הצף - נמצאת מחוץ ל-container כדי למנוע קפיצות מהצד */}
+ 
       {showLogin && (
         <div className="login-modal-overlay">
           <div className="pop-in">

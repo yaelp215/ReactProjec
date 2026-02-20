@@ -1,10 +1,8 @@
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import type { CombustionCar, ElectricCar } from "../Models/car"
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
+import type { CombustionCar, ElectricCar, Car } from "../Models/car"
 import axios from "axios";
-import type { Car } from '../Models/car';
 import "./AddNewCar.css"
 import Swal from 'sweetalert2';
 type CarFormValues =
@@ -44,14 +42,23 @@ const NewCar: React.FC = () => {
     };
 
     const handleSubmit = async (values: CarFormValues, { setSubmitting, resetForm }: FormikHelpers<CarFormValues>) => {
-        console.log("נתוני הרכב החדש:", values);
         try {
             if (carToEdit?.id) {
                 await axios.put(`http://localhost:3000/cars/${carToEdit.id}`, {
                     ...values,
                     id: carToEdit.id
                 });
-                alert("הרכב עודכן בהצלחה!");
+                Swal.fire({
+                    title: '!הרכב עודכן בהצלחה',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    confirmButtonColor: '#0076ff',
+                    target: 'body',
+                    customClass: {
+                        popup: 'my-swal-car-added-popup'
+                    }
+                });
                 navigate("/cars");
             }
             else {
@@ -64,16 +71,9 @@ const NewCar: React.FC = () => {
                 if (response.status === 201) {
                     Swal.fire({
                         title: '!הרכב נוסף בהצלחה',
-                        html: `
-        <div style="text-align: center; ">
-            <img src="/public/Image/Logo- DRIVON.png" alt="Blue Car" class="swal-car-animation" style="width: 150px; margin-bottom: 10px; background-color: #0056b3:">
-            <p>  DRIVON הרכב החדש נוסף לקטלוג המכוניות של </p>
-        </div>
-    `,
                         timer: 2000,
                         timerProgressBar: true,
                         showConfirmButton: false,
-
                         confirmButtonColor: '#0076ff',
                         target: 'body',
                         customClass: {
@@ -90,7 +90,13 @@ const NewCar: React.FC = () => {
 
         } catch (error) {
             console.error("שגיאה בהוספת הרכב:", error);
-            alert("אופס! הייתה שגיאה בחיבור לשרת");
+            Swal.fire({
+                icon: 'error',
+                title: 'אופס!',
+                text: 'הייתה שגיאה בחיבור לשרת',
+                confirmButtonText: 'סגור',
+                confirmButtonColor: '#d33'
+            });
         } finally {
             setSubmitting(false);
         }
@@ -98,9 +104,9 @@ const NewCar: React.FC = () => {
 
     };
     return (
-        <div className="login-overlay"> 
-            <div className="register-modal-frame"> 
-                <div className="form-section-white"> 
+        <div className="login-overlay">
+            <div className="register-modal-frame">
+                <div className="form-section-white">
 
                     <button className="close-btn-dark" onClick={() => navigate("/")}>×</button>
 

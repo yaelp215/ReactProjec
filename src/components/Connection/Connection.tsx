@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import "./Connection.css"
 import Swal from 'sweetalert2';
+import axios from "axios";
 interface LoginFormProps {
     setIsAdmin: (value: boolean) => void;
 }
@@ -49,10 +50,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ setIsAdmin }) => {
                             validationSchema={loginSchema}
                             onSubmit={async (values) => {
                                 try {
-                                    const response = await fetch(
-                                        `http://localhost:3000/users?email=${values.email}&password=${values.password}`
-                                    );
-                                    const data = await response.json();
+                                    const response = await axios.get(`http://localhost:3000/users`, {
+                                        params: {
+                                            email: values.email,
+                                            password: values.password
+                                        }
+                                    });
+                                    const data = await response.data;
                                     if (data.length > 0) {
                                         const user = data[0];
                                         if (values.password === "AAAAAA") {
